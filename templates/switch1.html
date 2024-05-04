@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Energy Monitor</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+  <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Energy Monitor</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+      data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </header>
+
+  <div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <div class="position-sticky pt-3">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'index' %}">
+                <span data-feather="home"></span>
+                Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'switch1' %}">
+                <span data-feather="file"></span>
+                Switch 1
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'switch2' %}">
+                <span data-feather="shopping-cart"></span>
+                Switch 2
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'switch3' %}">
+                <span data-feather="layers"></span>
+                Switch 3
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'switch4' %}">
+                <span data-feather="layers"></span>
+                Switch 4
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'switch5' %}">
+                <span data-feather="layers"></span>
+                Switch 5
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'plug1' %}">
+                <span data-feather="users"></span>
+                Plug 1
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'plug2' %}">
+                <span data-feather="bar-chart-2"></span>
+                Plug 2
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div
+          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Dashboard - Switch 1</h1>
+          <a href="/toggle_switch1" class="btn btn-primary">Power - {{ dataHTML.plug_status }}</a>
+          <a href="/refresh_switch1" class="btn btn-primary">Refresh</a>
+        </div>
+
+        <div class="container body">
+          <div class="main_container">
+            <div class="col-md-3 left_col">
+              <div class="left_col scroll-view">
+              </div>
+            </div>
+
+            <div class="right_col" role="main">
+              <div class="row">
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                  <div class="x_panel tile">
+                    <div class="x_title">
+                      <h2>
+                        <strong>Device Hardware Info</strong>
+                      </h2>
+                      <div class="clearfix"></div>
+                      <p>Software Version: {{ dataHTML.sw_ver }}</p>
+                      <p>Hardware Version: {{ dataHTML.hw_ver }}</p>
+                      <p>MAC: {{ dataHTML.mac }}</p>
+                      <p>Hardware ID: {{ dataHTML.hwId }}</p>
+                      <p>FW ID: {{ dataHTML.fwId }}</p>
+                      <p>OEM ID: {{ dataHTML.oemId }}</p>
+                      <p>Device Name: {{ dataHTML.dev_name }}</p>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                  <div class="x_panel tile">
+                    <div class="x_title">
+                      <h2>
+                        <strong>Realtime Trend</strong>
+                      </h2>
+                      <div class="clearfix"></div>
+                    </div>
+                    </div>
+                    <div>
+                      <canvas id="myChart1"></canvas>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row">
+
+                <div class="card" style="width: 18rem; height: fit-content; margin: 20px;">
+                  <div class="card-body">
+                    <h5 class="card-title">Plug state</h5>
+                    <p class="btn btn-primary">{{ dataHTML.plug_status }}</p>
+                  </div>
+                </div>
+                <div class="card" style="width: 18rem; height: fit-content; margin: 20px;">
+                  <div class="card-body">
+                    <h5 class="card-title">Total</h5>
+                    <a href="#" class="btn btn-primary">
+                      <pre>{{ dataHTML.uptime }} KJ</pre>
+                    </a>
+                  </div>
+                </div>
+                <div class="card" style="width: 18rem; height: fit-content; margin: 20px;">
+                  <div class="card-body">
+                    <h5 class="card-title">Total today</h5>
+                    <a href="#" class="btn btn-primary">
+                      <pre>{{ dataHTML.usage_today }} KJ</pre>
+                    </a>
+                  </div>
+                </div>
+                <div class="card" style="width: 18rem; height: fit-content; margin: 20px;">
+                  <div class="card-body">
+                    <h5 class="card-title">Total this month</h5>
+                    <a href="#" class="btn btn-primary">
+                      <pre>{{ dataHTML.total_this_month }} kJ</pre>
+                    </a>
+                  </div>
+                </div>
+                <div class="card" style="width: 18rem; height: fit-content; margin: 20px;">
+                  <div class="card-body">
+                    <h5 class="card-title">Monthly avg</h5>
+                    <a href="#" class="btn btn-primary">
+                      <pre>{{ dataHTML.monthly_avg }} KJ</pre>
+                    </a>
+                  </div>
+                </div>
+                <div class="card" style="width: 18rem; height: fit-content; margin: 20px;">
+                  <div class="card-body">
+                    <h5 class="card-title">Yearly avg</h5>
+                    <a href="#" class="btn btn-primary">
+                      <pre>{{ dataHTML.yearly_avg }} KJ</pre>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="row">
+
+                  <div class="col-md-8 col-sm-8 col-xs-12">
+                    <div class="x_panel tile">
+                      <div class="x_title">
+                        <h2>
+                          <strong>Last 30 days (KJ)</strong>
+                        </h2>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div>
+                        <canvas id="myChart2"></canvas>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="x_panel tile">
+                      <div class="x_title">
+                        <h2>
+                          <strong>Last 12 months</strong>
+                        </h2>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div>
+                        <canvas id="myChart4"></canvas>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript">
+      var data = JSON.parse("{{data|escapejs}}");
+      const labels1 = data.xaxis;
+      let testData = data.yaxis;
+
+      const data1 = {
+        labels: labels1,
+        datasets: [{
+          label: 'Energy (in KJ)',
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: testData,
+        }]
+      };
+
+      const config1 = {
+        type: 'line',
+        data: data1,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      };
+
+    </script>
+    <script>
+      var data = JSON.parse("{{data|escapejs}}");
+      const labels4 = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+      ];
+
+      const data4 = {
+        labels: labels4,
+        datasets: [{
+          label: 'Energy (in KJ)',
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: data.monthly_stats_result_usage,
+        }]
+      };
+
+      const config4 = {
+        type: 'bar',
+        data: data4,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      };
+
+    </script>
+    <script>
+      var data = JSON.parse("{{data|escapejs}}");
+      const labels2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+      const data2 = {
+        labels: labels2,
+        datasets: [{
+          label: 'Energy (in KJ)',
+          data: data.daily_stats_result_usage,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(201, 203, 207, 0.2)'
+          ],
+          borderColor: [
+            'rgb(255, 99, 132)',
+            'rgb(255, 159, 64)',
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(201, 203, 207)'
+          ],
+          borderWidth: 1
+        }]
+      };
+
+      const config2 = {
+        type: 'bar',
+        data: data2,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        },
+      };
+    </script>
+    <script>
+      const data3 = {
+        labels: [
+          'Red',
+          'Blue',
+          'Yellow'
+        ],
+        datasets: [{
+          label: 'My First Dataset',
+          data: [300, 50, 100],
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)'
+          ],
+          hoverOffset: 4
+        }]
+      };
+    </script>
+    <script>
+      const config3 = {
+        type: 'doughnut',
+        data: data3,
+      };
+    </script>
+    <script>
+      const myChart1 = new Chart(
+        document.getElementById('myChart1'),
+        config1
+      );
+    </script>
+    <script>
+      const myChart2 = new Chart(
+        document.getElementById('myChart2'),
+        config2
+      );
+    </script>
+    <script>
+      const myChart3 = new Chart(
+        document.getElementById('myChart3'),
+        config3
+      );
+    </script>
+    <script>
+      const myChart4 = new Chart(
+        document.getElementById('myChart4'),
+        config4
+      );
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"></script>
+</body>
+
+</html>

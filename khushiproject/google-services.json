@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "575671784729",
+    "firebase_url": "https://pythonintegrated-default-rtdb.firebaseio.com",
+    "project_id": "pythonintegrated",
+    "storage_bucket": "pythonintegrated.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575671784729:android:09eacad59c92c2b3dda188",
+        "android_client_info": {
+          "package_name": "com.example.pythonintegrated"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "575671784729-moc8p2c11bv9940ie12vhmib1mga3ppe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATeiR8AZG_NmSdZ-hbGWqUy1KGbTkTVIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "575671784729-moc8p2c11bv9940ie12vhmib1mga3ppe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
